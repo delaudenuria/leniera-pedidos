@@ -14,13 +14,14 @@ barrios = [
     "Jaime Prats", "El Nihuil", "Salto de las Rosas", "Las Malvinas"
 ]
 
-# Precios unitarios por Kg
+# Precios unitarios por Kg (versión test productivo)
 precios_por_tipo = {
-    "Eucalipto": 250,
-    "Quebracho": 400,
-    "Mix": 300,
-    "Otro": 200
+    "Eucalipto": 5,
+    "Quebracho": 7,
+    "Mix": 6,
+    "Otro": 4
 }
+
 
 if not st.session_state['pedido_confirmado']:
     # Formulario de pedido
