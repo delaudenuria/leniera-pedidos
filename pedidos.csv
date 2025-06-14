@@ -1,0 +1,12 @@
+Fecha Pedido,Cliente,Tipo de Leña,Cantidad,Precio,Estado Entrega,Estado Pago,Notas
+2025-06-14,zulma,Quebracho,10.0,200.0,Entregado,Pagado,
+2025-06-14,nuria,Eucalipto,600.0,8000.0,Entregado,Pagado,
+2025-06-14,nuria,Eucalipto,600.0,8000.0,Pendiente,Pagado,
+2025-06-14,nuria,Eucalipto,600.0,1.0,Pendiente,Pendiente,
+2025-06-14,nuria,Eucalipto,600.0,8000.0,Entregado,Pendiente,
+2025-06-14,carlos,Eucalipto,600.0,8000.0,Entregado,Pendiente,
+2025-06-14,juana,Quebracho,600.0,1.0,Entregado,Pendiente,
+2025-06-14,lucia,Quebracho,200.0,8000.0,Entregado,Pendiente,
+2025-06-10,lucia,Eucalipto,100.0,8.0,Entregado,Pendiente,cobrar en dos semanas
+2025-06-10,lucia,Mix,5.0,4.0,Entregado,Pendiente,
+2025-06-12,lucia,Mix,5.0,4.0,Pendiente,Pagado,hola
