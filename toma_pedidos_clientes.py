@@ -1,5 +1,12 @@
 import streamlit as st
 from datetime import datetime
+import mercadopago
+
+# 🚨 PONE AQUÍ TU ACCESS TOKEN DE PRODUCCIÓN:
+ACCESS_TOKEN = "APP_USR-1098186404338177-061414-c7529c0390a34f79ef3673510443d6d7-270155230"
+
+# Inicializamos el SDK de MercadoPago
+sdk = mercadopago.SDK(ACCESS_TOKEN)
 
 # Inicializamos el estado de sesión si no existe
 if 'pedido_confirmado' not in st.session_state:
@@ -14,14 +21,13 @@ barrios = [
     "Jaime Prats", "El Nihuil", "Salto de las Rosas", "Las Malvinas"
 ]
 
-# Precios unitarios por Kg (versión test productivo)
+# Precios de test bajos
 precios_por_tipo = {
     "Eucalipto": 5,
     "Quebracho": 7,
     "Mix": 6,
     "Otro": 4
 }
-
 
 if not st.session_state['pedido_confirmado']:
     # Formulario de pedido
@@ -54,7 +60,6 @@ if not st.session_state['pedido_confirmado']:
     else:
         st.markdown(f"### Se pagará al momento de la entrega.")
 
-    # Función para procesar el pedido y cambiar de pantalla
     def confirmar_pedido():
         st.session_state['pedido_confirmado'] = True
         st.session_state['pedido'] = {
@@ -92,11 +97,32 @@ else:
 
     if pedido['monto_a_pagar'] > 0:
         st.write(f"**Monto a pagar ahora:** ${pedido['monto_a_pagar']:,.2f}")
-        st.warning("Aquí luego irá el link de pago MercadoPago 🔗")
+
+        # Creamos la preferencia de MercadoPago
+        preference_data = {
+            "items": [
+                {
+                    "title": f"Pedido de leña ({pedido['tipo_lena']})",
+                    "quantity": 1,
+                    "unit_price": float(pedido['monto_a_pagar'])
+                }
+            ],
+            "back_urls": {
+                "success": "https://www.tusitio.com/success",
+                "failure": "https://www.tusitio.com/failure",
+                "pending": "https://www.tusitio.com/pending"
+            },
+            "auto_return": "approved"
+        }
+
+        preference_response = sdk.preference().create(preference_data)
+        preference = preference_response["response"]
+
+        # Mostramos el link de pago al cliente
+        st.markdown("### 🔗 [Hacé click aquí para pagar con MercadoPago]({})".format(preference["init_point"]))
     else:
         st.info("Pago contra entrega confirmado.")
 
-    # Función para resetear el formulario al cargar nuevo pedido
     def resetear_formulario():
         st.session_state['pedido_confirmado'] = False
 
